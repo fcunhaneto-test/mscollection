@@ -1,11 +1,9 @@
 <template>
     <footer class="footer">
-        <div class="content">
-            <p>
+            <p class="has-text-right has-text-white my-0">
                 MSCollection by Francisco Cunha Neto. The source code is licensed
                 <a class="has-text-light" href="http://opensource.org/licenses/mit-license.php">MIT</a>
             </p>
-        </div>
     </footer>
 </template>
 
@@ -16,5 +14,12 @@ export default {
 </script>
 
 <style scoped>
-
+footer {
+    position: absolute;
+    width: 100%;
+    height: 120px;
+    bottom: 0;
+    overflow:hidden;
+    background-color: #0074d7;
+}
 </style>

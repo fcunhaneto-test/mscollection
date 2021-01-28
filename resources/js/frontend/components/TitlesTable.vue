@@ -1,8 +1,28 @@
 <template>
     <section class="section-table" v-if="titles">
-        <button class="button is-danger is-rounded is-small my-3 ml-6" @click="closeTableOrder">
-            Limpar Ordenação das Colunas<span class="ml-3"><i class="fas fa-times"></i></span>
+        <button class="button is-danger my-3 ml-6" @click="closeTableOrder">
+            Limpar Ordenação<span class="ml-3"><i class="fas fa-times"></i></span>
         </button>
+        <button v-if="!isSearch" class="button is-link my-3 ml-3" @click="searchFor">
+            Pesquisar<span class="ml-3"><i class="fas fa-search"></i></span>
+        </button>
+        <button v-else class="button is-link my-3 ml-3" @click="searchFor">
+            Fechar Pesquisa<span class="ml-3"><i class="fas fa-times"></i></span>
+        </button>
+        <div v-if="isSearch" class="level">
+            <div class="level-item">
+                <label class="label">Categoria:</label>
+            </div>
+            <div class="level-item">
+                <label class="label">Ano:</label>
+            </div>
+            <div class="level-item">
+                <label class="label">Rating:</label>
+            </div>
+            <div class="level-item">
+                <label class="label">Tempo:</label>
+            </div>
+        </div>
         <b-table
             v-model="title"
             :data="titles"
@@ -146,13 +166,13 @@ export default {
     },
     data() {
         return {
-            loading: true,
-            isFullPage: false,
+            isSearch: false,
+            isModalActive: false,
             row: 0,
             sortIcon: 'arrow-up',
             sortIconSize: 'is-small',
             title: null,
-            isModalActive: false,
+            titles_copy: null,
             cast: [],
             media: [],
             directors: [],
@@ -183,13 +203,23 @@ export default {
         }
     },
     methods: {
+        searchFor() {
+            this.$store.commit('SET_RESET_SORT', new Date().toLocaleString())
+            this.titles_copy = this.titles
+            this.isSearch = !this.isSearch
+        },
+        clearSearch() {
+            this.$store.commit('SET_RESET_SORT', new Date().toLocaleString())
+            this.isSearch = !this.isSearch
+            this.$store.commit('SET_TITLES', this.titles_copy)
+        },
+        closeTableOrder() {
+            this.$store.commit('SET_RESET_SORT', new Date().toLocaleString())
+        },
         closeModal() {
             this.isModalActive = false
             this.title = null
         },
-        closeTableOrder() {
-            this.$emit('closeTableOrder')
-        }
     },
 }
 </script>
