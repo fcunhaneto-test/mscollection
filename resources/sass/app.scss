@@ -1,0 +1,55 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Vue animate
+$animationDuration: 1s; // specify animation duration. Default value: 1s
+@import "~vue2-animate/src/sass/vue2-animate";
+
+// Bulma
+@import "~bulma/bulma";
+@import "~buefy/src/scss/buefy";
+
+body {
+    line-height: 1.5em;
+}
+
+.login-card {
+    border: 1px solid #0a0a0a;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.section-table {
+    border: 1px solid #33b45c;
+}
+table {
+    border-bottom: 1px solid #0a0a0a;
+}
+table tbody tr.detail {
+    background-color: #0a0a0a !important;
+}
+.b-table .table-wrapper.has-sticky-header tr:first-child th {
+    color: #ffffff;
+    background: black;
+}
+.b-table .table th.is-current-sort {
+    border-bottom: 2px solid red;
+}
+a.table-link-front {
+    color: #324040;
+}
+.detail-container {
+    background-color: #0a0a0a;
+}
+
+#span-stars {
+    color: #F9A825;
+}
