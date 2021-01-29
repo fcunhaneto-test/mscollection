@@ -2,6 +2,7 @@ import VueRouter from "vue-router";
 
 import Titles from "./frontend/Titles";
 import TitlesView from "./admin/TitlesView";
+
 const routes = [
     {
         path: '/filmes/:channel',

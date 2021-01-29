@@ -1,26 +1,38 @@
 <template>
     <section class="section-table" v-if="titles">
-        <button class="button is-danger my-3 ml-6" @click="closeTableOrder">
-            Limpar Ordenação<span class="ml-3"><i class="fas fa-times"></i></span>
-        </button>
-        <button v-if="!isSearch" class="button is-link my-3 ml-3" @click="searchFor">
-            Pesquisar<span class="ml-3"><i class="fas fa-search"></i></span>
-        </button>
-        <button v-else class="button is-link my-3 ml-3" @click="searchFor">
-            Fechar Pesquisa<span class="ml-3"><i class="fas fa-times"></i></span>
-        </button>
-        <div v-if="isSearch" class="level">
-            <div class="level-item">
-                <label class="label">Categoria:</label>
+        <div class="level mb-3">
+            <div class="level-left">
+                <button v-if="!isSearch" class="button is-link my-3 ml-3" @click="searchFor">
+                    Pesquisar<span class="ml-3"><i class="fas fa-search"></i></span>
+                </button>
+                <button v-else class="button is-link my-3 ml-3" @click="clearSearch">
+                    Fechar Pesquisa<span class="ml-3"><i class="fas fa-times"></i></span>
+                </button>
             </div>
-            <div class="level-item">
-                <label class="label">Ano:</label>
+            <div class="level-right">
+                <button class="button is-danger my-3 mr-3" @click="closeTableOrder">
+                    Limpar Ordenação<span><i class="fas fa-times"></i></span>
+                </button>
             </div>
-            <div class="level-item">
-                <label class="label">Rating:</label>
-            </div>
-            <div class="level-item">
-                <label class="label">Tempo:</label>
+        </div>
+        <div v-if="isSearch" class="level mb-3">
+            <div class="level-left">
+                <div class="level-item has-borders ml-3">
+                    <label class="label mt-2 ml-2 mr-3">Categoria:</label>
+                    <category-search></category-search>
+                </div>
+                <div class="level-item has-borders">
+                    <label class="label mt-2 ml-2 mr-3">Ano:</label>
+                    <year-search></year-search>
+                </div>
+                <div class="level-item has-borders">
+                    <label class="label ml-2 mr-3">Rating:</label>
+                    <rating-search></rating-search>
+                </div>
+                <div class="level-item has-borders">
+                    <label class="label mt-2 ml-2 mr-3">Tempo:</label>
+                    <time-search></time-search>
+                </div>
             </div>
         </div>
         <b-table
@@ -63,12 +75,8 @@
             <b-table-column field="category_2" label="Categoria 2" centered sortable v-slot="props">
                 <a class="table-link-front" href="#">{{ props.row.category_2 }}</a>
             </b-table-column>
-            <template slot="footer">
-                <div>
-                    {{ title_footer }}
-                </div>
-            </template>
         </b-table>
+        <div class="table-footer"></div>
         <b-modal v-if="title" v-model="isModalActive" :width="640" scroll="keep">
             <div class="card">
                 <div class="has-text-right">
@@ -159,8 +167,19 @@
 </template>
 
 <script>
+import CategorySearch from "./CategorySearch"
+import YearSearch from "./YearSearch"
+import RatingSearch from "./RatingSearch"
+import TimeSearch from "./TimeSearch"
+
 export default {
     name: "MoviesTable",
+    components: {
+        CategorySearch,
+        YearSearch,
+        RatingSearch,
+        TimeSearch
+    },
     props: {
         title_footer: String,
     },
@@ -232,4 +251,5 @@ export default {
 .table tbody tr td {
     font-size: 1rem;
 }
+
 </style>

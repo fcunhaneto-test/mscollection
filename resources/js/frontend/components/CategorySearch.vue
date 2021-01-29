@@ -1,5 +1,5 @@
 <template>
-    <b-field v-if="categories" label="Categoria:" has-icons-right>
+    <b-field v-if="categories" has-icons-right>
         <b-autocomplete
             v-model="name"
             id="categories"
@@ -48,7 +48,7 @@ export default {
     },
     watch: {
         selected() {
-            axios.get(`/api/${this.table}/search-channel-category/${this.channel}/${this.selected.name}`).then(response => {
+            axios.get(`/api/${this.table}/frontend-category/${this.channel}/${this.selected.name}`).then(response => {
                 this.$store.commit('SET_TITLES', response.data)
                 return {}
             }).catch(errors => console.log(errors))

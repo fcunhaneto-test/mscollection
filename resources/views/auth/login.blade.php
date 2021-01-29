@@ -5,7 +5,7 @@
 @section('content')
     <div class="columns is-centered mt-6">
         <div class="column is-one-third mt-6">
-            <div class="card login-card">
+            <div class="card has-borders">
                 <header class="card-header login-card-header">
                     <h1 class="title is-5 card-header-title">Entrar</h1>
                 </header>

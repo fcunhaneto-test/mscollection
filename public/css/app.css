@@ -20922,7 +20922,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
 }
 
 .b-table .table-wrapper.has-sticky-header {
-  height: 480px;
+  height: 500px;
   overflow-y: auto;
 }
 
@@ -22130,10 +22130,6 @@ body {
   line-height: 1.5em;
 }
 
-.login-card {
-  border: 1px solid #0a0a0a;
-}
-
 .footer {
   position: fixed;
   left: 0;
@@ -22141,16 +22137,20 @@ body {
   width: 100%;
 }
 
+.has-borders {
+  border: 1px solid #dbdbdb;
+}
+
 .section-table {
   border: 1px solid #33b45c;
 }
 
-table {
-  border-bottom: 1px solid #0a0a0a;
-}
-
 table tbody tr.detail {
   background-color: #0a0a0a !important;
+}
+
+.b-table {
+  border-bottom: 1px solid #000000;
 }
 
 .b-table .table-wrapper.has-sticky-header tr:first-child th {
@@ -22160,6 +22160,12 @@ table tbody tr.detail {
 
 .b-table .table th.is-current-sort {
   border-bottom: 2px solid red;
+}
+
+.table-footer {
+  width: 100%;
+  height: 30px;
+  background-color: black;
 }
 
 a.table-link-front {

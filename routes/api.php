@@ -10,10 +10,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('movies')->group(function() {
     Route::get('/frontend-start/{channel}/{per_page}', 'MovieController@frontendStart');
     Route::get('/frontend-page/{channel}/{offset}/{per_page}', 'MovieController@frontendPage');
-    Route::get('/search-channel-year/{channel}/{year}', 'MovieController@frontendSearchYear');
-    Route::get('/search-channel-time/{channel}/{start}/{end}', 'MovieController@frontendSearchTime');
-    Route::get('/search-channel-rating/{channel}/{rating}', 'MovieController@frontendSearchRating');
-    Route::get('/search-channel-category/{channel}/{category}', 'MovieController@frontendSearchCategory');
+    Route::get('/frontend-year/{channel}/{year}', 'MovieController@frontendSearchYear');
+    Route::get('/frontend-time/{channel}/{start}/{end}', 'MovieController@frontendSearchTime');
+    Route::get('/frontend-rating/{channel}/{rating}', 'MovieController@frontendSearchRating');
+    Route::get('/frontend-category/{channel}/{category}', 'MovieController@frontendSearchCategory');
 
     Route::get('/admin', 'MovieController@adminStart');
     Route::get('/admin/{letter}', 'MovieController@adminLetter');
