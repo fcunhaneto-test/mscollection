@@ -4,8 +4,7 @@ use App\Models\Qualifiers\Media;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-//    return redirect('/filmes/netflix');
-    return view('testes');
+    return redirect('/filmes/netflix');
 });
 
 Route::get('/filmes/{channel}', function ($channel) {

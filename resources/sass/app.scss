@@ -4,10 +4,6 @@
 // Variables
 @import 'variables';
 
-// Vue animate
-$animationDuration: 1s; // specify animation duration. Default value: 1s
-@import "~vue2-animate/src/sass/vue2-animate";
-
 // Bulma
 @import "~bulma/bulma";
 @import "~buefy/src/scss/buefy";
@@ -54,6 +50,10 @@ a.table-link-front {
 }
 .detail-container {
     background-color: #0a0a0a;
+}
+
+.has-text-orange {
+    color: #FF9800;
 }
 
 #span-stars {

@@ -9,6 +9,6 @@ export default {
     per_page: 10,
     letters: null,
     letter: null,
-    header_aux: '',
+    header_aux: null,
     resetSort: 0,
 }

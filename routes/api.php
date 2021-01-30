@@ -20,7 +20,6 @@ Route::prefix('movies')->group(function() {
 
     Route::get('/producers/{id}', 'MovieController@producers');
     Route::get('/cast/{id}', 'MovieController@cast');
-    Route::get('/titles/{channel}', 'MovieController@channelTitles');
     Route::get('/media/{id}', 'MovieController@media');
     Route::get('/category/{category}', 'MovieController@category');
     Route::get('/year/{year}', 'MovieController@year');
@@ -30,16 +29,17 @@ Route::prefix('movies')->group(function() {
 Route::prefix('series')->group(function() {
     Route::get('/frontend-start/{channel}/{per_page}', 'SeriesController@frontendStart');
     Route::get('/frontend-page/{channel}/{offset}/{per_page}', 'SeriesController@frontendPage');
-    Route::get('/search-channel-year/{channel}/{year}', 'SeriesController@frontendSearchYear');
-    Route::get('/search-channel-rating/{channel}/{rating}', 'SeriesController@frontendSearchRating');
-    Route::get('/search-channel-category/{channel}/{category}', 'SeriesController@frontendSearchCategory');
+    Route::get('/frontend-year/{channel}/{year}', 'SeriesController@frontendSearchYear');
+    Route::get('/frontend-rating/{channel}/{rating}', 'SeriesController@frontendSearchRating');
+    Route::get('/frontend-category/{channel}/{category}', 'SeriesController@frontendSearchCategory');
+
+    Route::get('/admin', 'SeriesController@adminStart');
+    Route::get('/admin/{letter}', 'SeriesController@adminLetter');
 
     Route::get('/producers/{id}', 'SeriesController@producers');
     Route::get('/cast/{id}', 'SeriesController@cast');
-    Route::get('/titles/{channel}', 'SeriesController@channelTitles');
     Route::get('/media/{id}', 'SeriesController@media');
     Route::get('/year/{year}', 'SeriesController@year');
-    Route::get('/time/{start}/{end}', 'MovieController@time');
 });
 
 Route::prefix('media')->group(function() {

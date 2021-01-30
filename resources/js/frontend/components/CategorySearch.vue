@@ -50,6 +50,7 @@ export default {
         selected() {
             axios.get(`/api/${this.table}/frontend-category/${this.channel}/${this.selected.name}`).then(response => {
                 this.$store.commit('SET_TITLES', response.data)
+                this.$store.commit('SET_HEADER_AUX', `Categoria = ${this.selected.name}`)
                 return {}
             }).catch(errors => console.log(errors))
         }

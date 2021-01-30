@@ -1,9 +1,19 @@
 <template>
     <div id="main" class="mt-6">
         <b-table :data="data">
-            <b-table-column field="id" label="ID" width="40" numeric>
+            <b-table-column field="id" label="Título" width="40" numeric>
                 <template v-slot:header="{ column }">
-                    <b-tooltip :label="column.label" append-to-body dashed>{{ column.label }}</b-tooltip>
+                    <a class="button"
+                       v-tooltip="{
+                              content: 'Hello World',
+                              placement: 'top-center',
+                              classes: ['button', 'is-dark'],
+                              targetClasses: ['it-has-a-tooltip'],
+                              offset: 20,
+                        }"
+                       :label="column.label" >
+                        {{ column.label }}
+                    </a>
                 </template>
                 <template v-slot="props">{{ props.row.id }}</template>
             </b-table-column>

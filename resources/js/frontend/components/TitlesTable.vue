@@ -15,7 +15,7 @@
                 </button>
             </div>
         </div>
-        <div v-if="isSearch" class="level mb-3">
+        <div v-if="isSearch" class="level ml-6 mb-3">
             <div class="level-left">
                 <div class="level-item has-borders ml-3">
                     <label class="label mt-2 ml-2 mr-3">Categoria:</label>
@@ -26,10 +26,10 @@
                     <year-search></year-search>
                 </div>
                 <div class="level-item has-borders">
-                    <label class="label ml-2 mr-3">Rating:</label>
+                    <label class="label mt-2 ml-2 mr-3">Rating:</label>
                     <rating-search></rating-search>
                 </div>
-                <div class="level-item has-borders">
+                <div v-show="table === 'movies'" class="level-item has-borders">
                     <label class="label mt-2 ml-2 mr-3">Tempo:</label>
                     <time-search></time-search>
                 </div>
@@ -207,18 +207,14 @@ export default {
         titles() {
             return this.$store.getters.getTitles
         },
+        header_aux() {
+            return this.$store.getters.getHeaderAux
+        }
     },
     watch: {
         title() {
-            if (this.title) {
-                axios.get(`/api/${this.table}/cast/${this.title.id}`).then(response => {
-                    this.cast = response.data
-                }).catch(errors => console.log(errors))
-                axios.get(`/api/${this.table}/producers/${this.title.id}`).then(response => {
-                    this.directors = response.data
-                })
-                this.isModalActive = true
-            }
+            this.$store.commit('SET_TITLE', this.title)
+            this.$router.push('/filme')
         }
     },
     methods: {
@@ -231,6 +227,7 @@ export default {
             this.$store.commit('SET_RESET_SORT', new Date().toLocaleString())
             this.isSearch = !this.isSearch
             this.$store.commit('SET_TITLES', this.titles_copy)
+            this.$store.commit('SET_HEADER_AUX', null)
         },
         closeTableOrder() {
             this.$store.commit('SET_RESET_SORT', new Date().toLocaleString())

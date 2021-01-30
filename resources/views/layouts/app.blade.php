@@ -14,7 +14,7 @@
     <script src="https://kit.fontawesome.com/ae6bddef86.js" crossorigin="anonymous"></script>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link  rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <!-- SEO meta tags and links -->
     <meta name="title" content="MSCollection">

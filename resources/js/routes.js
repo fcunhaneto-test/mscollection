@@ -1,6 +1,7 @@
 import VueRouter from "vue-router";
 
 import Titles from "./frontend/Titles";
+import TitlePage from "./frontend/TitlePage";
 import TitlesView from "./admin/TitlesView";
 
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
         path: '/series/:channel',
         component: Titles,
         name: 'series'
+    },
+    {
+        path: '/filme/',
+        component: TitlePage,
+        name: 'movie-page'
     },
     {
         path: '/admin/filmes',

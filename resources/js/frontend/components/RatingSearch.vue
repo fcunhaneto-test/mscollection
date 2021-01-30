@@ -8,20 +8,6 @@
                 <span class="icon has-text-dark"><i class="far fa-star"></i></span>
             </a>
         </div>
-
-        <button
-            class="button is-link is-outlined"
-            @click="searchRating"
-            v-tooltip="{
-                  content: msg,
-                  placement: 'top-center',
-                  classes: ['button', 'is-dark'],
-                  targetClasses: ['it-has-a-tooltip'],
-                  offset: 20,
-            }"
-        >
-            <i class="fas fa-search"></i>
-        </button>
     </div>
 
 </template>
@@ -57,16 +43,17 @@ export default {
                 this.yellow_star = ys
                 this.white_star = 5 - this.yellow_star
             }
-            console.log('YEllOW', this.yellow_star)
-            console.log('WITHE', this.white_star)
+            this.searchRating()
         },
         addStar(ws) {
             this.yellow_star += ws
             this.white_star = 5 - this.yellow_star
+            this.searchRating()
         },
         searchRating() {
             axios.get(`/api/${this.table}/frontend-rating/${this.channel}/${this.yellow_star}`).then(reponse => {
                 this.$store.commit('SET_TITLES', reponse.data)
+                this.$store.commit('SET_HEADER_AUX', `Classificação = ${this.yellow_star} estrelas`)
             }).catch(errors => console.log(errors))
         }
     },

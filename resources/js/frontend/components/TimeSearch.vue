@@ -15,12 +15,20 @@ export default {
             end: '02:00'
         }
     },
+    computed: {
+        table() {
+            return this.$store.getters.getTable
+        },
+        channel() {
+            return this.$store.getters.getChannel
+        },
+    },
     methods: {
         searchTime() {
-            let start = this.strTime(this.start.toString())
-            let end = this.strTime(this.end.toString())
-            axios.get(`/api/movies/channel-time/${this.channel}/${start}/${end}`).then(response => {
+            axios.get(`/api/${this.table}/frontend-time/${this.channel}/${this.start}/${this.end}`).then(response => {
                 this.$store.commit('SET_TITLES', response.data)
+                this.$store.commit('SET_HEADER_AUX', `Tempo Entre ${this.start} e ${this.end}`)
+                return {}
             }).catch(errors => console.log(errors))
         },
     }

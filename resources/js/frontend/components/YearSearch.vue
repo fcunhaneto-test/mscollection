@@ -25,7 +25,7 @@ export default {
         searchYear() {
             axios.get(`/api/${this.table}/frontend-year/${this.channel}/${this.year}`).then(response => {
                 this.$store.commit('SET_TITLES', response.data)
-                this.$store.commit('SET_HEADER_AUX', `Ano = ${this.selected.name}`)
+                this.$store.commit('SET_HEADER_AUX', `Ano = ${this.year}`)
                 return {}
             }).catch(errors => console.log(errors))
         },

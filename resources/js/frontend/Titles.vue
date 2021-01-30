@@ -4,11 +4,12 @@
             <div class="column mt-5">
                 <div class="level mb-3">
                     <div class="level-item">
-                        <h1 v-if="header" class="title is-3 has-text-right">
+                        <h1 v-if="header" class="title is-3">
                             <span v-if="table === 'movies'">Filmes</span>
                             <span v-else>Séries</span>
                             {{ header }}
                         </h1>
+                        <h2 v-if="header_aux" class="title is-3 ml-5">{{ header_aux }}</h2>
                     </div>
                     <div class="level-item">
                         <div class="field is-horizontal">
@@ -28,8 +29,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <titles-pagination :pages="pages"></titles-pagination>
+                <div class="mb-3" >
+                    <titles-pagination v-if="!header_aux" :pages="pages"></titles-pagination>
                 </div>
                 <titles-table></titles-table>
             </div>
@@ -78,6 +79,9 @@ export default {
         per_page() {
             return this.$store.getters.getPerPage
         },
+        header_aux() {
+            return this.$store.getters.getHeaderAux
+        }
     },
     watch: {
         selected() {
