@@ -3,6 +3,7 @@ export default {
     SET_TABLE: (state, payload) => { state.table = payload },
     SET_CHANNEL: (state, payload) => { state.channel = payload },
     SET_TITLES: (state, payload) => { state.titles = payload },
+    SET_TITLES_CHANNEL: (state, payload) => { state.titles_channel = payload },
     SET_TITLE: (state, payload) => { state.title = payload },
     SET_MS_TITLE: (state, payload) => { state.ms_title = payload },
     SET_PAGE: (state, payload) => { state.page = payload },

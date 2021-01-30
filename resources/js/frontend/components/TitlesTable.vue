@@ -2,25 +2,37 @@
     <section class="section-table" v-if="titles">
         <div class="level mb-3">
             <div class="level-left">
-                <button v-if="!isSearch" class="button is-link my-3 ml-3" @click="searchFor">
-                    Pesquisar<span class="ml-3"><i class="fas fa-search"></i></span>
-                </button>
-                <button v-else class="button is-link my-3 ml-3" @click="clearSearch">
-                    Fechar Pesquisa<span class="ml-3"><i class="fas fa-times"></i></span>
-                </button>
+                <div class="level-item">
+                    <button v-if="!isSearch" class="button is-link my-3 ml-3" @click="searchFor">
+                        Pesquisar<span class="ml-3"><i class="fas fa-search"></i></span>
+                    </button>
+                    <button v-else class="button is-link my-3 ml-3" @click="clearSearch">
+                        Fechar Pesquisa<span class="ml-3"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
             </div>
             <div class="level-right">
-                <button class="button is-danger my-3 mr-3" @click="closeTableOrder">
-                    Limpar Ordenação<span><i class="fas fa-times"></i></span>
-                </button>
+                <div class="level-item">
+                    <button class="button is-danger my-3 mr-3" @click="closeTableOrder">
+                        Limpar Ordenação<span><i class="fas fa-times ml-3"></i></span>
+                    </button>
+                </div>
             </div>
         </div>
         <div v-if="isSearch" class="level ml-6 mb-3">
             <div class="level-left">
+                <div class="level-item has-borders">
+                    <label class="label mt-2 ml-2 mr-3">Títulos:</label>
+                    <titles-search></titles-search>
+                </div>
                 <div class="level-item has-borders ml-3">
                     <label class="label mt-2 ml-2 mr-3">Categoria:</label>
                     <category-search></category-search>
                 </div>
+            </div>
+        </div>
+        <div v-if="isSearch" class="level ml-6 mb-3">
+            <div class="level-left">
                 <div class="level-item has-borders">
                     <label class="label mt-2 ml-2 mr-3">Ano:</label>
                     <year-search></year-search>
@@ -171,6 +183,7 @@ import CategorySearch from "./CategorySearch"
 import YearSearch from "./YearSearch"
 import RatingSearch from "./RatingSearch"
 import TimeSearch from "./TimeSearch"
+import TitlesSearch from "./TitlesSearch";
 
 export default {
     name: "MoviesTable",
@@ -178,7 +191,8 @@ export default {
         CategorySearch,
         YearSearch,
         RatingSearch,
-        TimeSearch
+        TimeSearch,
+        TitlesSearch
     },
     props: {
         title_footer: String,
@@ -209,7 +223,7 @@ export default {
         },
         header_aux() {
             return this.$store.getters.getHeaderAux
-        }
+        },
     },
     watch: {
         title() {
