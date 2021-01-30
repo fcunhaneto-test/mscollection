@@ -5,17 +5,20 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="media">
-                            <div class="media-left">
-                                <figure class="image">
-                                    <img v-if="title.poster" :src="'../images/poster/' + title.poster"
-                                         alt="Poster do Filme">
-                                    <img v-else :src="'../images/poster/faker-poster.png'" alt="Poster do Filme">
-                                </figure>
+                            <div class="media-left pt-1 pl-1">
+                                <img v-if="title.poster" :src="'../images/poster/' + title.poster"
+                                     alt="Poster do Filme" width="120"
+                                     height="162">
+                                <img v-else :src="'../images/poster/faker_poster_120x162.png'"
+                                     alt="Poster do Filme" width="120"
+                                     height="162">
                             </div>
-                            <div class="media-content" >
+                            <div class="media-content">
                                 <div class="mt-3">
                                     <h1 class="title is-4 has-text-orange">{{ title.title }}</h1>
-                                    <p class="subtitle is-5 has-text-light">Título Original: {{ title.original_title }}</p>
+                                    <p class="subtitle is-5 has-text-light">Título Original: {{
+                                            title.original_title
+                                        }}</p>
                                 </div>
                                 <div class="is-inline-block mt-4">
                                     <b-tag class="mr-2" type="is-info">Ano: {{ title.year }}</b-tag>
@@ -46,14 +49,44 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                        <a href="#">#css</a> <a href="#">#responsive</a>
-                        <br>
-                        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                    <div class="card-content mt-3 pt-0">
+                        <table v-if="cast.length > 0" class="table table is-fullwidth mt-3">
+                            <thead class="has-background-white">
+                            <tr>
+                                <th class="title is-6">Ator/Personagem</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="ac in cast">
+                                <td class="pl-5">{{ ac.actor }}</td>
+                                <td>{{ ac.character }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table v-if="producers.length > 0" class="table table is-fullwidth mt-3 pt-0">
+                            <thead class="has-background-white">
+                            <tr>
+                                <th class="title is-6 pt-0">
+                                    <span v-if="table === 'movies'">Diretor(es)</span>
+                                    <span v-else>Criador(es)</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="producer in producers">
+                                <td class="pl-5">{{ producer.name }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="mb-6 mt-3 px-0">
+                            <h5 class="title is-6 resume">Resumo:</h5>
+                            <hr>
+                            <p class="resume-body px-5">{{ title.synopsis }}</p>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -94,5 +127,23 @@ export default {
 .card-header {
     width: 100%;
     background-color: #0a0a0a;
+}
+hr {
+    height:2px;
+    margin: 0.75rem 0;
+    border-width:0;
+    color:black;
+    background-color:black;
+}
+table td {
+    font-size: 1rem;
+}
+.resume {
+    margin: 0;
+    padding: 0 15px;
+}
+.resume-body {
+    color: #000000;
+    font-size: 1rem;
 }
 </style>

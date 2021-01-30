@@ -2930,6 +2930,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TitlesCard",
   data: function data() {
@@ -3015,7 +3048,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -3031,7 +3063,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      isCard: false,
+      isSearch: false,
       selected: null,
       pages: 1,
       page_copy: 1,
@@ -3373,6 +3405,87 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/frontend/components/TitlesSearch.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/frontend/components/TitlesSearch.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "TitlesSearch",
+  data: function data() {
+    return {
+      title: '',
+      selected: null,
+      titles_channel: null
+    };
+  },
+  computed: {
+    table: function table() {
+      return this.$store.getters.getTable;
+    },
+    channel: function channel() {
+      return this.$store.getters.getChannel;
+    },
+    filteredDataArray: function filteredDataArray() {
+      var _this = this;
+
+      return this.titles_channel.filter(function (option) {
+        return option.title.toString().toLowerCase().indexOf(_this.title.toLowerCase()) >= 0;
+      });
+    }
+  },
+  watch: {
+    selected: function selected() {
+      var _this2 = this;
+
+      console.log('TITLE SELECTED', this.selected.id, this.selected.title);
+      axios.get("/api/".concat(this.table, "/show/").concat(this.selected.id)).then(function (response) {
+        console.log(response.data);
+
+        _this2.$store.commit('SET_TITLES', response.data);
+
+        _this2.$store.commit('SET_HEADER_AUX', "T\xEDtulo = ".concat(_this2.selected.title));
+
+        return {};
+      })["catch"](function (errors) {
+        return console.log(errors);
+      });
+    }
+  },
+  created: function created() {
+    var _this3 = this;
+
+    axios.get("/api/".concat(this.table, "/channel/").concat(this.channel)).then(function (response) {
+      _this3.titles_channel = response.data;
+    })["catch"](function (errors) {
+      return console.log(errors);
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/frontend/components/TitlesTable.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/frontend/components/TitlesTable.vue?vue&type=script&lang=js& ***!
@@ -3386,6 +3499,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _YearSearch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./YearSearch */ "./resources/js/frontend/components/YearSearch.vue");
 /* harmony import */ var _RatingSearch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RatingSearch */ "./resources/js/frontend/components/RatingSearch.vue");
 /* harmony import */ var _TimeSearch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TimeSearch */ "./resources/js/frontend/components/TimeSearch.vue");
+/* harmony import */ var _TitlesSearch__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./TitlesSearch */ "./resources/js/frontend/components/TitlesSearch.vue");
 //
 //
 //
@@ -3481,79 +3595,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -3564,7 +3606,8 @@ __webpack_require__.r(__webpack_exports__);
     CategorySearch: _CategorySearch__WEBPACK_IMPORTED_MODULE_0__["default"],
     YearSearch: _YearSearch__WEBPACK_IMPORTED_MODULE_1__["default"],
     RatingSearch: _RatingSearch__WEBPACK_IMPORTED_MODULE_2__["default"],
-    TimeSearch: _TimeSearch__WEBPACK_IMPORTED_MODULE_3__["default"]
+    TimeSearch: _TimeSearch__WEBPACK_IMPORTED_MODULE_3__["default"],
+    TitlesSearch: _TitlesSearch__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   props: {
     title_footer: String
@@ -3572,7 +3615,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       isSearch: false,
-      isModalActive: false,
       row: 0,
       sortIcon: 'arrow-up',
       sortIconSize: 'is-small',
@@ -3608,19 +3650,17 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.commit('SET_RESET_SORT', new Date().toLocaleString());
       this.titles_copy = this.titles;
       this.isSearch = !this.isSearch;
+      this.$emit('searching', this.isSearch);
     },
     clearSearch: function clearSearch() {
       this.$store.commit('SET_RESET_SORT', new Date().toLocaleString());
       this.isSearch = !this.isSearch;
       this.$store.commit('SET_TITLES', this.titles_copy);
       this.$store.commit('SET_HEADER_AUX', null);
+      this.$emit('searching', this.isSearch);
     },
     closeTableOrder: function closeTableOrder() {
       this.$store.commit('SET_RESET_SORT', new Date().toLocaleString());
-    },
-    closeModal: function closeModal() {
-      this.isModalActive = false;
-      this.title = null;
     }
   }
 });
@@ -21121,7 +21161,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-header[data-v-06197f28] {\n    width: 100%;\n    background-color: #0a0a0a;\n}\n", ""]);
+exports.push([module.i, "\n.card-header[data-v-06197f28] {\n    width: 100%;\n    background-color: #0a0a0a;\n}\nhr[data-v-06197f28] {\n    height:2px;\n    margin: 0.75rem 0;\n    border-width:0;\n    color:black;\n    background-color:black;\n}\ntable td[data-v-06197f28] {\n    font-size: 1rem;\n}\n.resume[data-v-06197f28] {\n    margin: 0;\n    padding: 0 15px;\n}\n.resume-body[data-v-06197f28] {\n    color: #000000;\n    font-size: 1rem;\n}\n", ""]);
 
 // exports
 
@@ -50711,22 +50751,24 @@ var render = function() {
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
             _c("div", { staticClass: "media" }, [
-              _c("div", { staticClass: "media-left" }, [
-                _c("figure", { staticClass: "image" }, [
-                  _vm.title.poster
-                    ? _c("img", {
-                        attrs: {
-                          src: "../images/poster/" + _vm.title.poster,
-                          alt: "Poster do Filme"
-                        }
-                      })
-                    : _c("img", {
-                        attrs: {
-                          src: "../images/poster/faker-poster.png",
-                          alt: "Poster do Filme"
-                        }
-                      })
-                ])
+              _c("div", { staticClass: "media-left pt-1 pl-1" }, [
+                _vm.title.poster
+                  ? _c("img", {
+                      attrs: {
+                        src: "../images/poster/" + _vm.title.poster,
+                        alt: "Poster do Filme",
+                        width: "120",
+                        height: "162"
+                      }
+                    })
+                  : _c("img", {
+                      attrs: {
+                        src: "../images/poster/faker_poster_120x162.png",
+                        alt: "Poster do Filme",
+                        width: "120",
+                        height: "162"
+                      }
+                    })
               ]),
               _vm._v(" "),
               _c(
@@ -50827,7 +50869,69 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "card-content mt-3 pt-0" }, [
+            _vm.cast.length > 0
+              ? _c("table", { staticClass: "table table is-fullwidth mt-3" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.cast, function(ac) {
+                      return _c("tr", [
+                        _c("td", { staticClass: "pl-5" }, [
+                          _vm._v(_vm._s(ac.actor))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(ac.character))])
+                      ])
+                    }),
+                    0
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.producers.length > 0
+              ? _c(
+                  "table",
+                  { staticClass: "table table is-fullwidth mt-3 pt-0" },
+                  [
+                    _c("thead", { staticClass: "has-background-white" }, [
+                      _c("tr", [
+                        _c("th", { staticClass: "title is-6 pt-0" }, [
+                          _vm.table === "movies"
+                            ? _c("span", [_vm._v("Diretor(es)")])
+                            : _c("span", [_vm._v("Criador(es)")])
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.producers, function(producer) {
+                        return _c("tr", [
+                          _c("td", { staticClass: "pl-5" }, [
+                            _vm._v(_vm._s(producer.name))
+                          ])
+                        ])
+                      }),
+                      0
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-6 mt-3 px-0" }, [
+              _c("h5", { staticClass: "title is-6 resume" }, [
+                _vm._v("Resumo:")
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c("p", { staticClass: "resume-body px-5" }, [
+                _vm._v(_vm._s(_vm.title.synopsis))
+              ])
+            ])
+          ])
         ])
       ])
     ])
@@ -50838,20 +50942,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-content" }, [
-      _vm._v(
-        "\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n                    Phasellus nec iaculis mauris. "
-      ),
-      _c("a", [_vm._v("@bulmaio")]),
-      _vm._v(".\n                    "),
-      _c("a", { attrs: { href: "#" } }, [_vm._v("#css")]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "#" } }, [_vm._v("#responsive")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("time", { attrs: { datetime: "2016-1-1" } }, [
-        _vm._v("11:09 PM - 1 Jan 2016")
+    return _c("thead", { staticClass: "has-background-white" }, [
+      _c("tr", [
+        _c("th", { staticClass: "title is-6" }, [_vm._v("Ator/Personagem")]),
+        _vm._v(" "),
+        _c("th")
       ])
     ])
   }
@@ -50895,12 +50990,6 @@ var render = function() {
                         _vm._s(_vm.header) +
                         "\n                    "
                     )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.header_aux
-                ? _c("h2", { staticClass: "title is-3 ml-5" }, [
-                    _vm._v(_vm._s(_vm.header_aux))
                   ])
                 : _vm._e()
             ]),
@@ -50997,14 +51086,20 @@ var render = function() {
             "div",
             { staticClass: "mb-3" },
             [
-              !_vm.header_aux
+              !_vm.isSearch
                 ? _c("titles-pagination", { attrs: { pages: _vm.pages } })
                 : _vm._e()
             ],
             1
           ),
           _vm._v(" "),
-          _c("titles-table")
+          _c("titles-table", {
+            on: {
+              searching: function($event) {
+                _vm.isSearch = $event
+              }
+            }
+          })
         ],
         1
       )
@@ -51297,6 +51392,65 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/frontend/components/TitlesSearch.vue?vue&type=template&id=3bbbb5c6&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/frontend/components/TitlesSearch.vue?vue&type=template&id=3bbbb5c6&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.titles_channel
+    ? _c(
+        "b-field",
+        { attrs: { "has-icons-right": "" } },
+        [
+          _c(
+            "b-autocomplete",
+            {
+              attrs: {
+                id: "title",
+                placeholder: "título",
+                "open-on-focus": true,
+                data: _vm.filteredDataArray,
+                field: "title",
+                "icon-right": "chevron-down"
+              },
+              on: {
+                select: function(option) {
+                  return (_vm.selected = option)
+                }
+              },
+              model: {
+                value: _vm.title,
+                callback: function($$v) {
+                  _vm.title = $$v
+                },
+                expression: "title"
+              }
+            },
+            [_c("template", { slot: "empty" }, [_vm._v("No results found")])],
+            2
+          )
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/frontend/components/TitlesTable.vue?vue&type=template&id=bad3b22e&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/frontend/components/TitlesTable.vue?vue&type=template&id=bad3b22e&scoped=true& ***!
@@ -51319,40 +51473,66 @@ var render = function() {
         [
           _c("div", { staticClass: "level mb-3" }, [
             _c("div", { staticClass: "level-left" }, [
-              !_vm.isSearch
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "button is-link my-3 ml-3",
-                      on: { click: _vm.searchFor }
-                    },
-                    [_vm._v("\n                Pesquisar"), _vm._m(0)]
-                  )
-                : _c(
-                    "button",
-                    {
-                      staticClass: "button is-link my-3 ml-3",
-                      on: { click: _vm.clearSearch }
-                    },
-                    [_vm._v("\n                Fechar Pesquisa"), _vm._m(1)]
-                  )
+              _c("div", { staticClass: "level-item" }, [
+                !_vm.isSearch
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "button is-link my-3 ml-3",
+                        on: { click: _vm.searchFor }
+                      },
+                      [_vm._v("\n                    Pesquisar"), _vm._m(0)]
+                    )
+                  : _c(
+                      "button",
+                      {
+                        staticClass: "button is-link my-3 ml-3",
+                        on: { click: _vm.clearSearch }
+                      },
+                      [
+                        _vm._v("\n                    Fechar Pesquisa"),
+                        _vm._m(1)
+                      ]
+                    ),
+                _vm._v(" "),
+                _vm.isSearch
+                  ? _c("p", { staticClass: "title is-4 ml-3" }, [
+                      _vm._v(_vm._s(_vm.header_aux))
+                    ])
+                  : _vm._e()
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "level-right" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "button is-danger my-3 mr-3",
-                  on: { click: _vm.closeTableOrder }
-                },
-                [_vm._v("\n                Limpar Ordenação"), _vm._m(2)]
-              )
+              _c("div", { staticClass: "level-item" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "button is-danger my-3 mr-3",
+                    on: { click: _vm.closeTableOrder }
+                  },
+                  [_vm._v("\n                    Limpar Ordenação"), _vm._m(2)]
+                )
+              ])
             ])
           ]),
           _vm._v(" "),
           _vm.isSearch
             ? _c("div", { staticClass: "level ml-6 mb-3" }, [
                 _c("div", { staticClass: "level-left" }, [
+                  _c(
+                    "div",
+                    { staticClass: "level-item has-borders" },
+                    [
+                      _c("label", { staticClass: "label mt-2 ml-2 mr-3" }, [
+                        _vm._v("Títulos:")
+                      ]),
+                      _vm._v(" "),
+                      _c("titles-search")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "level-item has-borders ml-3" },
@@ -51364,8 +51544,14 @@ var render = function() {
                       _c("category-search")
                     ],
                     1
-                  ),
-                  _vm._v(" "),
+                  )
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isSearch
+            ? _c("div", { staticClass: "level ml-6 mb-3" }, [
+                _c("div", { staticClass: "level-left" }, [
                   _c(
                     "div",
                     { staticClass: "level-item has-borders" },
@@ -51647,252 +51833,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "table-footer" }),
-          _vm._v(" "),
-          _vm.title
-            ? _c(
-                "b-modal",
-                {
-                  attrs: { width: 640, scroll: "keep" },
-                  model: {
-                    value: _vm.isModalActive,
-                    callback: function($$v) {
-                      _vm.isModalActive = $$v
-                    },
-                    expression: "isModalActive"
-                  }
-                },
-                [
-                  _c("div", { staticClass: "card" }, [
-                    _c("div", { staticClass: "has-text-right" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "button is-light is-small mt-1 mr-1",
-                          on: { click: _vm.closeModal }
-                        },
-                        [_c("i", { staticClass: "fas fa-times" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card-content pt-0" }, [
-                      _c("div", { staticClass: "media has-background-black" }, [
-                        _c("div", { staticClass: "media-left" }, [
-                          _c("figure", { staticClass: "image" }, [
-                            _vm.title.poster
-                              ? _c("img", {
-                                  attrs: {
-                                    src: "../images/poster/" + _vm.title.poster,
-                                    alt: "Poster do Filme"
-                                  }
-                                })
-                              : _c("img", {
-                                  attrs: {
-                                    src: "../images/poster/faker-poster.png",
-                                    alt: "Poster do Filme"
-                                  }
-                                })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "media-content" },
-                          [
-                            _c("div", { staticClass: "mt-3" }, [
-                              _c(
-                                "h2",
-                                { staticClass: "title is-4 has-text-white" },
-                                [_vm._v(_vm._s(_vm.title.title))]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "is-inline-block mt-4" },
-                              [
-                                _c(
-                                  "b-tag",
-                                  {
-                                    staticClass: "mr-2",
-                                    attrs: { type: "is-info" }
-                                  },
-                                  [_vm._v("Ano: " + _vm._s(_vm.title.year))]
-                                ),
-                                _vm._v(" "),
-                                _vm.title.time
-                                  ? _c(
-                                      "b-tag",
-                                      {
-                                        staticClass: "mr-4",
-                                        attrs: { type: "is-info" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Duração: " +
-                                            _vm._s(
-                                              _vm._f("strTime")(_vm.title.time)
-                                            ) +
-                                            "\n                            "
-                                        )
-                                      ]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  [
-                                    _vm._l(_vm.title.rating, function(
-                                      star,
-                                      key
-                                    ) {
-                                      return _c("b-icon", {
-                                        key: key + "y",
-                                        staticClass: "has-text-warning",
-                                        attrs: { pack: "fas", icon: "star" }
-                                      })
-                                    }),
-                                    _vm._v(" "),
-                                    _vm._l(5 - _vm.title.rating, function(
-                                      star,
-                                      key
-                                    ) {
-                                      return _c("b-icon", {
-                                        key: key + "w",
-                                        staticClass: "has-text-white",
-                                        attrs: { pack: "fas", icon: "star" }
-                                      })
-                                    })
-                                  ],
-                                  2
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "b-taglist",
-                              { staticClass: "mt-2 mb-0" },
-                              [
-                                _vm.title.category_2
-                                  ? _c(
-                                      "b-tag",
-                                      {
-                                        staticClass: "has-text-black",
-                                        attrs: { type: "is-light" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Categorias:\n                                " +
-                                            _vm._s(_vm.title.category_1) +
-                                            ",\n                                " +
-                                            _vm._s(_vm.title.category_2) +
-                                            "\n                            "
-                                        )
-                                      ]
-                                    )
-                                  : _c(
-                                      "b-tag",
-                                      { attrs: { type: "is-dark" } },
-                                      [
-                                        _vm._v(
-                                          "Categoria: " +
-                                            _vm._s(_vm.title.category_1)
-                                        )
-                                      ]
-                                    )
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "content" }, [
-                        _vm.cast.length > 0
-                          ? _c(
-                              "table",
-                              { staticClass: "table table is-fullwidth mt-5" },
-                              [
-                                _c(
-                                  "thead",
-                                  { staticClass: "has-background-white" },
-                                  [
-                                    _c("tr", [
-                                      _c("th", { staticClass: "title is-6" }, [
-                                        _vm._v("Ator/Personagem")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("th", { staticClass: "title is-6" })
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "tbody",
-                                  _vm._l(_vm.cast, function(ac) {
-                                    return _c("tr", [
-                                      _c("td", { staticClass: "pl-5" }, [
-                                        _vm._v(_vm._s(ac.actor))
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [_vm._v(_vm._s(ac.character))])
-                                    ])
-                                  }),
-                                  0
-                                )
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.directors.length > 0
-                          ? _c(
-                              "table",
-                              { staticClass: "table table is-fullwidth mt-5" },
-                              [
-                                _c(
-                                  "thead",
-                                  { staticClass: "has-background-white" },
-                                  [
-                                    _c("tr", [
-                                      _c("th", { staticClass: "title is-6" }, [
-                                        _vm.table === "movies"
-                                          ? _c("span", [_vm._v("Diretor(es)")])
-                                          : _c("span", [_vm._v("Criador(es)")])
-                                      ])
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "tbody",
-                                  _vm._l(_vm.directors, function(director) {
-                                    return _c("tr", [
-                                      _c("td", { staticClass: "pl-5" }, [
-                                        _vm._v(_vm._s(director.name))
-                                      ])
-                                    ])
-                                  }),
-                                  0
-                                )
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "mb-6 mt-6 ml-2" }, [
-                          _c("h3", { staticClass: "title is-6 mb-2 pb-0" }, [
-                            _vm._v("Resumo:")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", [_vm._v(_vm._s(_vm.title.synopsis))])
-                        ])
-                      ])
-                    ])
-                  ])
-                ]
-              )
-            : _vm._e()
+          _c("div", { staticClass: "table-footer" })
         ],
         1
       )
@@ -51912,14 +51853,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "ml-3" }, [
-      _c("i", { staticClass: "fas fa-times" })
+      _c("i", { staticClass: "fas fa-times ml-3" })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", [_c("i", { staticClass: "fas fa-times" })])
+    return _c("span", [_c("i", { staticClass: "fas fa-times ml-3" })])
   }
 ]
 render._withStripped = true
@@ -70112,6 +70053,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/frontend/components/TitlesSearch.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/frontend/components/TitlesSearch.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TitlesSearch_vue_vue_type_template_id_3bbbb5c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TitlesSearch.vue?vue&type=template&id=3bbbb5c6&scoped=true& */ "./resources/js/frontend/components/TitlesSearch.vue?vue&type=template&id=3bbbb5c6&scoped=true&");
+/* harmony import */ var _TitlesSearch_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TitlesSearch.vue?vue&type=script&lang=js& */ "./resources/js/frontend/components/TitlesSearch.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TitlesSearch_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TitlesSearch_vue_vue_type_template_id_3bbbb5c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TitlesSearch_vue_vue_type_template_id_3bbbb5c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "3bbbb5c6",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/frontend/components/TitlesSearch.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/frontend/components/TitlesSearch.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/frontend/components/TitlesSearch.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TitlesSearch_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./TitlesSearch.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/frontend/components/TitlesSearch.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TitlesSearch_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/frontend/components/TitlesSearch.vue?vue&type=template&id=3bbbb5c6&scoped=true&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/frontend/components/TitlesSearch.vue?vue&type=template&id=3bbbb5c6&scoped=true& ***!
+  \******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TitlesSearch_vue_vue_type_template_id_3bbbb5c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./TitlesSearch.vue?vue&type=template&id=3bbbb5c6&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/frontend/components/TitlesSearch.vue?vue&type=template&id=3bbbb5c6&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TitlesSearch_vue_vue_type_template_id_3bbbb5c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TitlesSearch_vue_vue_type_template_id_3bbbb5c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/frontend/components/TitlesTable.vue":
 /*!**********************************************************!*\
   !*** ./resources/js/frontend/components/TitlesTable.vue ***!
@@ -70394,6 +70404,9 @@ __webpack_require__.r(__webpack_exports__);
   getTitles: function getTitles(state) {
     return state.titles;
   },
+  getTitlesChannel: function getTitlesChannel(state) {
+    return state.titles_channel;
+  },
   getTitle: function getTitle(state) {
     return state.title;
   },
@@ -70444,6 +70457,9 @@ __webpack_require__.r(__webpack_exports__);
   SET_TITLES: function SET_TITLES(state, payload) {
     state.titles = payload;
   },
+  SET_TITLES_CHANNEL: function SET_TITLES_CHANNEL(state, payload) {
+    state.titles_channel = payload;
+  },
   SET_TITLE: function SET_TITLE(state, payload) {
     state.title = payload;
   },
@@ -70489,6 +70505,7 @@ __webpack_require__.r(__webpack_exports__);
   table: null,
   channel: null,
   titles: null,
+  titles_channel: null,
   title: null,
   ms_title: null,
   page: 1,

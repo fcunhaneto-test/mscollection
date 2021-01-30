@@ -15,9 +15,12 @@ Route::prefix('movies')->group(function() {
     Route::get('/frontend-rating/{channel}/{rating}', 'MovieController@frontendSearchRating');
     Route::get('/frontend-category/{channel}/{category}', 'MovieController@frontendSearchCategory');
 
+
     Route::get('/admin', 'MovieController@adminStart');
     Route::get('/admin/{letter}', 'MovieController@adminLetter');
 
+    Route::get('/show/{id}', 'MovieController@show');
+    Route::get('/channel/{channel}', 'MovieController@channelTitles');
     Route::get('/producers/{id}', 'MovieController@producers');
     Route::get('/cast/{id}', 'MovieController@cast');
     Route::get('/media/{id}', 'MovieController@media');
@@ -36,6 +39,8 @@ Route::prefix('series')->group(function() {
     Route::get('/admin', 'SeriesController@adminStart');
     Route::get('/admin/{letter}', 'SeriesController@adminLetter');
 
+    Route::get('/show/{id}', 'SeriesController@show');
+    Route::get('/channel/{channel}', 'SeriesController@channelTitles');
     Route::get('/producers/{id}', 'SeriesController@producers');
     Route::get('/cast/{id}', 'SeriesController@cast');
     Route::get('/media/{id}', 'SeriesController@media');

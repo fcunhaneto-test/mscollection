@@ -9,7 +9,6 @@
                             <span v-else>Séries</span>
                             {{ header }}
                         </h1>
-                        <h2 v-if="header_aux" class="title is-3 ml-5">{{ header_aux }}</h2>
                     </div>
                     <div class="level-item">
                         <div class="field is-horizontal">
@@ -30,9 +29,9 @@
                     </div>
                 </div>
                 <div class="mb-3" >
-                    <titles-pagination v-if="!header_aux" :pages="pages"></titles-pagination>
+                    <titles-pagination v-if="!isSearch" :pages="pages"></titles-pagination>
                 </div>
-                <titles-table></titles-table>
+                <titles-table @searching="isSearch = $event"></titles-table>
             </div>
         </div>
     </div>
@@ -55,7 +54,7 @@ export default {
     },
     data() {
         return {
-            isCard: false,
+            isSearch: false,
             selected: null,
             pages: 1,
             page_copy: 1,

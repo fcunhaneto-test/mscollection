@@ -3,6 +3,7 @@ export default {
     getTable: state => { return state.table },
     getChannel: state => { return state.channel },
     getTitles: state => { return state.titles },
+    getTitlesChannel: state => { return state.titles_channel },
     getTitle: state => { return state.title },
     getMsTitle: state => { return state.ms_title },
     getPage: state => { return state.page },

@@ -2,25 +2,38 @@
     <section class="section-table" v-if="titles">
         <div class="level mb-3">
             <div class="level-left">
-                <button v-if="!isSearch" class="button is-link my-3 ml-3" @click="searchFor">
-                    Pesquisar<span class="ml-3"><i class="fas fa-search"></i></span>
-                </button>
-                <button v-else class="button is-link my-3 ml-3" @click="clearSearch">
-                    Fechar Pesquisa<span class="ml-3"><i class="fas fa-times"></i></span>
-                </button>
+                <div class="level-item">
+                    <button v-if="!isSearch" class="button is-link my-3 ml-3" @click="searchFor">
+                        Pesquisar<span class="ml-3"><i class="fas fa-search"></i></span>
+                    </button>
+                    <button v-else class="button is-link my-3 ml-3" @click="clearSearch">
+                        Fechar Pesquisa<span class="ml-3"><i class="fas fa-times ml-3"></i></span>
+                    </button>
+                    <p v-if="isSearch" class="title is-4 ml-3">{{ header_aux }}</p>
+                </div>
             </div>
             <div class="level-right">
-                <button class="button is-danger my-3 mr-3" @click="closeTableOrder">
-                    Limpar Ordenação<span><i class="fas fa-times"></i></span>
-                </button>
+                <div class="level-item">
+                    <button class="button is-danger my-3 mr-3" @click="closeTableOrder">
+                        Limpar Ordenação<span><i class="fas fa-times ml-3"></i></span>
+                    </button>
+                </div>
             </div>
         </div>
         <div v-if="isSearch" class="level ml-6 mb-3">
             <div class="level-left">
+                <div class="level-item has-borders">
+                    <label class="label mt-2 ml-2 mr-3">Títulos:</label>
+                    <titles-search></titles-search>
+                </div>
                 <div class="level-item has-borders ml-3">
                     <label class="label mt-2 ml-2 mr-3">Categoria:</label>
                     <category-search></category-search>
                 </div>
+            </div>
+        </div>
+        <div v-if="isSearch" class="level ml-6 mb-3">
+            <div class="level-left">
                 <div class="level-item has-borders">
                     <label class="label mt-2 ml-2 mr-3">Ano:</label>
                     <year-search></year-search>
@@ -77,92 +90,6 @@
             </b-table-column>
         </b-table>
         <div class="table-footer"></div>
-        <b-modal v-if="title" v-model="isModalActive" :width="640" scroll="keep">
-            <div class="card">
-                <div class="has-text-right">
-                    <button class="button is-light is-small mt-1 mr-1" @click="closeModal">
-                        <i class="fas fa-times"></i></button>
-                </div>
-                <div class="card-content pt-0">
-                    <div class="media has-background-black">
-                        <div class="media-left">
-                            <figure class="image">
-                                <img v-if="title.poster" :src="'../images/poster/' + title.poster"
-                                     alt="Poster do Filme">
-                                <img v-else :src="'../images/poster/faker-poster.png'" alt="Poster do Filme">
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <div class="mt-3">
-                                <h2 class="title is-4 has-text-white">{{ title.title }}</h2>
-                            </div>
-                            <div class="is-inline-block mt-4">
-                                <b-tag class="mr-2" type="is-info">Ano: {{ title.year }}</b-tag>
-                                <b-tag class="mr-4" v-if="title.time" type="is-info">Duração: {{
-                                        title.time | strTime
-                                    }}
-                                </b-tag>
-                                <span>
-                                    <b-icon v-for="(star, key) in title.rating" class="has-text-warning"
-                                            :key="key+'y'"
-                                            pack="fas"
-                                            icon="star"
-                                    ></b-icon>
-                                    <b-icon v-for="(star, key) in (5 - title.rating)" class="has-text-white"
-                                            :key="key+'w'"
-                                            pack="fas"
-                                            icon="star"
-                                    ></b-icon>
-                                </span>
-                            </div>
-                            <b-taglist class="mt-2 mb-0">
-                                <b-tag v-if="title.category_2" type="is-light" class="has-text-black">Categorias:
-                                    {{ title.category_1 }},
-                                    {{ title.category_2 }}
-                                </b-tag>
-                                <b-tag v-else type="is-dark">Categoria: {{ title.category_1 }}</b-tag>
-                            </b-taglist>
-                        </div>
-                    </div>
-
-                    <div class="content">
-                        <table v-if="cast.length > 0" class="table table is-fullwidth mt-5">
-                            <thead class="has-background-white">
-                            <tr>
-                                <th class="title is-6">Ator/Personagem</th>
-                                <th class="title is-6"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="ac in cast">
-                                <td class="pl-5">{{ ac.actor }}</td>
-                                <td>{{ ac.character }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table v-if="directors.length > 0" class="table table is-fullwidth mt-5">
-                            <thead class="has-background-white">
-                            <tr>
-                                <th class="title is-6">
-                                    <span v-if="table === 'movies'">Diretor(es)</span>
-                                    <span v-else>Criador(es)</span>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="director in directors">
-                                <td class="pl-5">{{ director.name }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="mb-6 mt-6 ml-2">
-                            <h3 class="title is-6 mb-2 pb-0">Resumo:</h3>
-                            <p>{{ title.synopsis }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </b-modal>
     </section>
 </template>
 
@@ -171,6 +98,7 @@ import CategorySearch from "./CategorySearch"
 import YearSearch from "./YearSearch"
 import RatingSearch from "./RatingSearch"
 import TimeSearch from "./TimeSearch"
+import TitlesSearch from "./TitlesSearch";
 
 export default {
     name: "MoviesTable",
@@ -178,7 +106,8 @@ export default {
         CategorySearch,
         YearSearch,
         RatingSearch,
-        TimeSearch
+        TimeSearch,
+        TitlesSearch
     },
     props: {
         title_footer: String,
@@ -186,7 +115,6 @@ export default {
     data() {
         return {
             isSearch: false,
-            isModalActive: false,
             row: 0,
             sortIcon: 'arrow-up',
             sortIconSize: 'is-small',
@@ -209,7 +137,7 @@ export default {
         },
         header_aux() {
             return this.$store.getters.getHeaderAux
-        }
+        },
     },
     watch: {
         title() {
@@ -222,19 +150,17 @@ export default {
             this.$store.commit('SET_RESET_SORT', new Date().toLocaleString())
             this.titles_copy = this.titles
             this.isSearch = !this.isSearch
+            this.$emit('searching', this.isSearch)
         },
         clearSearch() {
             this.$store.commit('SET_RESET_SORT', new Date().toLocaleString())
             this.isSearch = !this.isSearch
             this.$store.commit('SET_TITLES', this.titles_copy)
             this.$store.commit('SET_HEADER_AUX', null)
+            this.$emit('searching', this.isSearch)
         },
         closeTableOrder() {
             this.$store.commit('SET_RESET_SORT', new Date().toLocaleString())
-        },
-        closeModal() {
-            this.isModalActive = false
-            this.title = null
         },
     },
 }

@@ -3,6 +3,7 @@ export default {
     table: null,
     channel: null,
     titles: null,
+    titles_channel: null,
     title: null,
     ms_title: null,
     page: 1,
