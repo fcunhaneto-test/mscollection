@@ -39,7 +39,7 @@
                     <year-search></year-search>
                 </div>
                 <div class="level-item has-borders">
-                    <label class="label mt-2 ml-2 mr-3">Rating:</label>
+                    <label class="label mt-2 ml-2 mr-3">Avaliação:</label>
                     <rating-search></rating-search>
                 </div>
                 <div v-show="table === 'movies'" class="level-item has-borders">
@@ -67,7 +67,7 @@
             <b-table-column v-if="table === 'movies'" field="time" label="Tempo" centered sortable v-slot="props">
                 <a class="table-link-front" href="#">{{ props.row.time | strTime }}</a>
             </b-table-column>
-            <b-table-column field="rating" label="Ranking" centered sortable v-slot="props">
+            <b-table-column field="rating" label="Avaliação" centered sortable v-slot="props">
                 <a href="#" id="span-stars">
                     <b-icon v-for="(star, key) in props.row.rating"
                             :key="key+'y'"
@@ -90,6 +90,97 @@
             </b-table-column>
         </b-table>
         <div class="table-footer"></div>
+        <b-modal v-if="title" v-model="isModalActive" :width="860" scroll="keep">
+            <div class="card">
+                <div class="has-text-right mb-1">
+                    <button class="button is-link mt-1 mr-1 " @click="closeModal">
+                        Fechar <i class="fas fa-times ml-2"></i></button>
+                </div>
+                <div class="card-content pt-0">
+                    <div class="media has-background-black">
+                        <div class="media-left mt-1 ml-1">
+                            <img v-if="title.poster" :src="'../images/poster/' + title.poster"
+                                 alt="Poster do Filme" width="120" height="162">
+                            <img v-else :src="'../images/poster/faker-poster.png'" alt="Poster do Filme"
+                                 width="120" height="162">
+                        </div>
+                        <div class="media-content">
+                            <div class="mt-3">
+                                <h2 class="title is-4 has-text-orange">{{ title.title }}</h2>
+                            </div>
+                            <div class="is-inline-block mt-4">
+                                <b-tag class="mr-2" type="is-info">Ano: {{ title.year }}</b-tag>
+                                <b-tag class="mr-4" v-if="title.time" type="is-info">Duração: {{
+                                        title.time | strTime
+                                    }}
+                                </b-tag>
+                                <span>
+                                    <b-icon v-for="(star, key) in title.rating" class="has-text-warning"
+                                            :key="key+'y'"
+                                            pack="fas"
+                                            icon="star"
+                                    ></b-icon>
+                                    <b-icon v-for="(star, key) in (5 - title.rating)" class="has-text-white"
+                                            :key="key+'w'"
+                                            pack="fas"
+                                            icon="star"
+                                    ></b-icon>
+                                </span>
+                            </div>
+                            <b-taglist class="mt-2 mb-0">
+                                <b-tag v-if="title.category_2" type="is-link">Categorias:
+                                    {{ title.category_1 }},
+                                    {{ title.category_2 }}
+                                </b-tag>
+                                <b-tag v-else type="is-dark">Categoria: {{ title.category_1 }}</b-tag>
+                            </b-taglist>
+                        </div>
+                    </div>
+                    <div class="content mt-3">
+                        <h3 class="title is-5 ml-3 has-text-dark">
+                            Título Original: <span class="ml-5">{{ title.original_title }}</span>
+                        </h3>
+                        <div>
+                            <h4 class="title is-6 mb-0 py-2 px-3">Resumo:</h4>
+                            <hr>
+                            <div class="mb-2 mx-3 has-text-black">{{ title.synopsis }}</div>
+                            <hr>
+                        </div>
+                        <table v-if="cast.length > 0" class="table table is-fullwidth mt-4">
+                            <thead class="has-background-white">
+                            <tr>
+                                <th class="title is-6">Ator/Personagem</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="ac in cast">
+                                <td class="pl-5">{{ ac.actor }}</td>
+                                <td>{{ ac.character }}</td>
+                            </tr>
+                            </tbody>
+                            <hr>
+                        </table>
+                        <table v-if="directors.length > 0" class="table table is-fullwidth mb-6">
+                            <thead class="has-background-white">
+                            <tr>
+                                <th class="title is-6">
+                                    <span v-if="table === 'movies'">Diretor(es)</span>
+                                    <span v-else>Criador(es)</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="director in directors">
+                                <td class="pl-5">{{ director.name }}</td>
+                            </tr>
+                            </tbody>
+                            <hr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </b-modal>
     </section>
 </template>
 
@@ -115,6 +206,7 @@ export default {
     data() {
         return {
             isSearch: false,
+            isModalActive: false,
             row: 0,
             sortIcon: 'arrow-up',
             sortIconSize: 'is-small',
@@ -141,8 +233,15 @@ export default {
     },
     watch: {
         title() {
-            this.$store.commit('SET_TITLE', this.title)
-            this.$router.push('/filme')
+            if (this.title) {
+                axios.get(`/api/${this.table}/cast/${this.title.id}`).then(response => {
+                    this.cast = response.data
+                }).catch(errors => console.log(errors))
+                axios.get(`/api/${this.table}/producers/${this.title.id}`).then(response => {
+                    this.directors = response.data
+                })
+                this.isModalActive = true
+            }
         }
     },
     methods: {
@@ -162,6 +261,10 @@ export default {
         closeTableOrder() {
             this.$store.commit('SET_RESET_SORT', new Date().toLocaleString())
         },
+        closeModal() {
+            this.isModalActive = false
+            this.title = null
+        }
     },
 }
 </script>
@@ -175,4 +278,11 @@ export default {
     font-size: 1rem;
 }
 
+hr {
+    height: 2px;
+    margin: 0 0 0.75rem 0;
+    border-width: 0;
+    color: #dbdbdb;
+    background-color: #dbdbdb;
+}
 </style>

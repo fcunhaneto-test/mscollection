@@ -23,7 +23,7 @@
                                         <option value="30">30</option>
                                     </select>
                                 </div>
-                                <b-switch v-model="isCard">Tabela/Cartão</b-switch>
+
                             </div>
                         </div>
                     </div>
